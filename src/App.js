@@ -302,7 +302,13 @@ function App() {
             </BOX>
 
             <Section2>
+              <div style={{
+                  
+                  marginTop: "20px",
+                  marginBottom: "10px",
+                }}>
               <hr className="custom-hr"></hr>
+              </div>
               <p className="custom-font">
                 The $BRETT reward pool with the richest daily return and lowest
                 dev fee, daily income up to 8% and a referal bonus up to
@@ -346,7 +352,7 @@ function App() {
               >
                 <h1
                   className="custom-font"
-                  style={{ margin: 0, paddingRight: "10px" }}
+                  style={{ margin: 0, paddingRight: "10px", paddingTop: "10px" }}
                 >
                   <strong>REWARDS</strong>
                 </h1>
@@ -457,6 +463,7 @@ function App() {
                   My Miners:
                 </p>
                 <p
+                  className="custom-font"
                   style={{
                     margin: 0, // Supprime toute marge du texte
                     padding: 0,
@@ -691,7 +698,7 @@ function App() {
               >
                 <h1
                   className="custom-font"
-                  style={{ margin: 0, paddingRight: "10px" }}
+                  style={{ margin: 0, paddingRight: "10px", paddingTop: "10px" }}
                 >
                   <strong>REFERAL LINK</strong>
                 </h1>

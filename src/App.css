@@ -86,7 +86,7 @@ html, body {
 
 .LeftSection {
   width: 100%;
-  max-width: 700px;
+  max-width: 650px;
   background-color: rgb(222, 246, 255); /* Couleur neutre */
   padding: 40px;
   margin:   35px auto 15px auto; /* Centre horizontalement */
@@ -97,10 +97,12 @@ html, body {
 
 
 .custom-font {
-  font-family: "Segoe UI", Tahoma, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 500;
-  color: #000000; /* Facultatif : couleur blanche */
+  font-family: "Truculenta", sans-serif;
+  font-weight: 550;
+  color: #000000;
+  text-align: justify; /* Facultatif : couleur blanche */
 }
+
 
 
 .custom-hr {
