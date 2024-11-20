@@ -7,7 +7,7 @@ import {
 import { WagmiProvider } from "wagmi";
 import { base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import logo from "./logo.png";
+import logo2 from "./logo3.png";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
@@ -61,11 +61,6 @@ const Button = styled.button`
   margin: 5px;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  border-radius: 10px;
-`;
-
 const ReferralSection = styled.div`
   margin-top: 20px;
   padding: 10px;
@@ -85,25 +80,6 @@ function App() {
   const [referral, setReferral] = useState(
     "0x0000000000000000000000000000000000000000"
   );
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      try {
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
-        setWalletAddress(address);
-        fetchBrettBalance(address);
-        fetchReward();
-        fetchContractData();
-        fetchTVL();
-      } catch (err) {
-        console.error("Error connecting wallet:", err);
-      }
-    } else {
-      alert("MetaMask is not installed. Please install it to use this app.");
-    }
-  };
 
   const initializeContract = async () => {
     if (window.ethereum) {
@@ -168,6 +144,19 @@ function App() {
     }
   };
 
+  const fetchTokenPrice = async () => {
+    try {
+      const response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=based-brett&vs_currencies=usd"
+      );
+      const data = await response.json();
+      return data["based-brett"].usd;
+    } catch (err) {
+      console.error("Error fetching token price:", err);
+      return 0;
+    }
+  };
+
   const fetchTVL = async () => {
     const brettMinerContract = await initializeContract();
     try {
@@ -181,19 +170,6 @@ function App() {
     } catch (err) {
       console.error("Error fetching TVL:", err);
       setTVL({ eth: 0, usd: 0 });
-    }
-  };
-
-  const fetchTokenPrice = async () => {
-    try {
-      const response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=based-brett&vs_currencies=usd"
-      );
-      const data = await response.json();
-      return data["based-brett"].usd;
-    } catch (err) {
-      console.error("Error fetching token price:", err);
-      return 0;
     }
   };
 
@@ -303,8 +279,8 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={lightTheme({
-            accentColor: "#44A7D2",
-            accentColorForeground: "black",
+            accentColor: "#0553F7",
+            accentColorForeground: "white",
             fontStack: "system",
             overlayBlur: "small",
           })}
@@ -316,12 +292,11 @@ function App() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  marginTop: "10px",
+                  marginBottom: "10px",
                 }}
               >
-                <h1 className="custom-font" style={{ fontSize: "45px" }}>
-                  BRETT MINER
-                </h1>
-                <img src={logo} alt="Logo" className="logo" />
+                <img src={logo2} alt="Logo" className="logo" />
                 <ConnectButton />
               </div>
             </BOX>
@@ -345,7 +320,7 @@ function App() {
                 <u>
                   <strong>#1 - BUY MINERS :</strong>
                 </u>{" "}
-                Start by using your $BRETT or $ETH topurchase miners
+                Start by using your $BRETT or $ETH to purchase miners
               </p>
               <p className="custom-font">
                 <u>
@@ -388,13 +363,6 @@ function App() {
               </p>
             </Section2>
 
-            {/* 
-        <Section>
-          <h2>Wallet Information</h2>
-          <p>Brett Balance: {brettBalance} Brett</p>
-        </Section>
-        */}
-
             <Section>
               <h1
                 className="custom-font"
@@ -431,7 +399,39 @@ function App() {
                     padding: 0,
                   }}
                 >
-                  {tvl.eth} Tokens
+                  {tvl.usd} $
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "20px",
+                  borderBottom: "1px solid black", // Ligne sous la ligne
+                  paddingBottom: "0px", // Ajoute un espace entre le texte et la ligne
+                  marginBottom: "10px",
+                  marginTop: "27px", // Espace entre les sections
+                }}
+              >
+                <p
+                  className="custom-font"
+                  style={{
+                    margin: 0, // Supprime toute marge du texte
+                    padding: 0,
+                  }}
+                >
+                  Brett Balance:
+                </p>
+                <p
+                  className="custom-font"
+                  style={{
+                    margin: 0, // Supprime toute marge du texte
+                    padding: 0,
+                  }}
+                >
+                  {brettBalance} BRETT
                 </p>
               </div>
 
@@ -526,7 +526,7 @@ function App() {
                     padding: 0,
                   }}
                 >
-                  {userReward} Brett
+                  {userReward} BRETT
                 </p>
               </div>
 
@@ -710,8 +710,8 @@ function App() {
               </ReferralSection>
             </Section2>
 
-            <div class="social-icons-container">
-              <div class="telegram-icon">
+            <div className="social-icons-container">
+              <div className="telegram-icon">
                 <a
                   href="https://t.me/Brett_Miner"
                   target="_blank"
@@ -727,7 +727,7 @@ function App() {
                   </svg>
                 </a>
               </div>
-              <div class="twitter-icon">
+              <div className="twitter-icon">
                 <a
                   href="https://x.com/BrettMinerBase"
                   target="_blank"

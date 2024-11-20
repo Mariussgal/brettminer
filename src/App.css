@@ -86,8 +86,8 @@ html, body {
 
 .LeftSection {
   width: 100%;
-  max-width: 650px;
-  background-color: rgba(255, 255, 255, 1); /* Couleur neutre */
+  max-width: 700px;
+  background-color: rgb(222, 246, 255); /* Couleur neutre */
   padding: 40px;
   margin:   35px auto 15px auto; /* Centre horizontalement */
   border-radius: 13px;
@@ -120,7 +120,7 @@ html, body {
 
   color: #212121;
   z-index: 1;
-  background: #e8e8e8;
+  background: #ffffff;
   position: relative;
   font-weight: 600;
   font-size: 15px;
@@ -138,7 +138,7 @@ html, body {
   height: 100%;
   width: 0;
   
-  background-color: #44A7D2;
+  background-color: #0553F7;
   z-index: -1;
   -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
   box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
@@ -146,7 +146,7 @@ html, body {
  }
  
  .button-87:hover {
-  color: #e8e8e8;
+  color: #ffffff;
  }
  
  .button-87:hover::before {
@@ -156,7 +156,7 @@ html, body {
 
 .logo {
   display: block;
-  width: 90px; /* Ajustez la largeur selon vos besoins */
+  width: 350px; /* Ajustez la largeur selon vos besoins */
   height: auto; /* Maintient les proportions de l'image */
   z-index: 100; /* Assurez-vous que le logo est au-dessus des autres éléments */
   margin: 0; /* Supprime toute marge par défaut */
