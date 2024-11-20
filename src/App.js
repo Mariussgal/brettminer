@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import styled from "styled-components";
-
 import BrettMinerABI from "./abis/BrettMinerABI.json";
+import BrettMinerImage from './Design_sans_titre_30.png'; 
+import './App.css';  // Assurez-vous que ce fichier est bien importé
 
 // Adresse du contrat et du token Brett
 const contractAddress = "0x2cF88805B665E2F14244065c8317eEa29967118A";
@@ -10,8 +11,32 @@ const brettTokenAddress = "0x532f27101965dd16442e59d40670faf5ebb142e4";
 
 const Container = styled.div`
   font-family: Arial, sans-serif;
-  text-align: center;
   padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const BOX = styled.section`
+ 
+  
+  text-align: left;
+`;
+
+const Section2 = styled.section`
+  
+  text-align: left;
+`;
+
+const LeftSection = styled.div`
+  width: 50%;
+  padding-right: 20px;
+`;
+
+const RightSection = styled.div`
+  width: 50%;
+  text-align: center;
 `;
 
 const Header = styled.header`
@@ -24,22 +49,32 @@ const Header = styled.header`
 `;
 
 const Section = styled.section`
-  margin: 20px 0;
-  padding: 20px;
-  background-color: #ecf0f1;
-  border-radius: 10px;
+  margin: 18px 0;
+  padding: 15px;
+  border: 1px solid gray;
   text-align: left;
 `;
 
 const Button = styled.button`
-  background-color: #f39c12;
+
   border: none;
   padding: 10px 20px;
   font-size: 16px;
-  color: white;
+  color: black;
   cursor: pointer;
   border-radius: 5px;
   margin: 5px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  border-radius: 10px;
+`;
+
+const ReferralSection = styled.div`
+  margin-top: 20px;
+  padding: 10px;
+ 
 `;
 
 function App() {
@@ -53,7 +88,7 @@ function App() {
   const [brettBalance, setBrettBalance] = useState(0);
   const [halvingPercentage, setHalvingPercentage] = useState(100);
   const [userReward, setUserReward] = useState(0);
-
+  const [referral, setReferral] = useState("0x0000000000000000000000000000000000000000");
   const connectWallet = async () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -237,6 +272,17 @@ function App() {
     }
   };
 
+  const copyReferralLink = () => {
+    if (walletAddress) {
+      const referralLink = `${window.location.origin}/?ref=${walletAddress}`;
+      navigator.clipboard.writeText(referralLink)
+        .then(() => alert("Referral link copied to clipboard!"))
+        .catch(() => alert("Failed to copy referral link."));
+    } else {
+      alert("Connect your wallet to generate a referral link.");
+    }
+  };
+
   const withdraw = async () => {
     const brettMinerContract = await initializeContract();
     try {
@@ -258,51 +304,118 @@ function App() {
   }, [walletAddress, myPoints]);
 
   return (
-    <Container>
-      <Header>
-        <h1>Brett Miner</h1>
-        <Button onClick={connectWallet}>
-          {walletAddress ? `Wallet: ${walletAddress}` : "Connect Wallet"}
-        </Button>
-      </Header>
+    <Container className="Container">
+      <LeftSection className="LeftSection">
 
-      <Section>
-        <h2>Wallet Information</h2>
-        <p>Brett Balance: {brettBalance} Brett</p>
-      </Section>
+        <BOX>
+        <div style={{ display: 'flex',  justifyContent: 'space-between', alignItems: 'center' }}>
+          <h1 style={{ fontSize: '45px' }}>BRETT MINER</h1>
+          <Button onClick={connectWallet}>
+            {walletAddress ? `Wallet: ${walletAddress}` : "Connect Wallet"}
+          </Button>
+        </div>
+        </BOX>
 
-      <Section>
-        <h2>Your Reward</h2>
-        <p>You can claim: {userReward} Brett</p>
-      </Section>
+        <Section2>
+          <hr></hr>
+          <p>The $BRETT reward pool with the richest daily return and lowest dev fee, daily income up to 8% and a referal bonus up to 12%</p>
+          <p><u><strong>#1 - BUY FARMERS :</strong></u> Start by using your $BRETT or $ETH topurchase miners</p>
+          <p><u><strong>#2 - COMPOUND:</strong></u> To maximize your earnings, click on the "COMPOUND" button. this action will automatically reinvest your rewards back into farmers</p>
+          <p><u><strong>#3 - CLAIM REWARDS:</strong></u> This will transfer your accumulated $BRETT rewards directly into your wallet</p>
+        </Section2>
 
-      <Section>
-        <h2>Game Information</h2>
-        <p>My Points: {myPoints}</p>
-        <p>My Miners: {myMiners}</p>
-        <p>Market Points: {marketPoints}</p>
-        <p>Claim Power: {claimPower * 100}%</p>
-      </Section>
+        <Section2>
+        
+        <h1><u><strong>REWARDS</strong></u></h1>
+        
+        <p>The key to maximizing your rewards lies in the quantity of brett you hold 
+          and how frequently you compound them. The more miner you accumulate and the more often you reinvest your rewards. the greater the potential for earning more rewards</p> 
+        </Section2>
 
-      <Section>
-        <h2>TVL (Total Value Locked)</h2>
-        <p>{tvl.eth} Tokens</p>
-        <p>${tvl.usd} USD</p>
-      </Section>
+        {/* 
+        <Section>
+          <h2>Wallet Information</h2>
+          <p>Brett Balance: {brettBalance} Brett</p>
+        </Section>
+        */}
 
-      <Section>
-        <h2>Actions</h2>
-        <input
-          type="number"
-          placeholder="Amount to deposit"
-          value={depositAmount}
-          onChange={(e) => setDepositAmount(e.target.value)}
-        />
-        <Button onClick={() => depositETH(depositAmount)}>Deposit ETH</Button>
-        <Button onClick={() => depositBrett(depositAmount)}>Deposit Brett</Button>
-        <Button onClick={compound}>Compound</Button>
-        <Button onClick={withdraw}>Withdraw</Button>
-      </Section>
+
+        <Section>
+          <h1 style={{ fontWeight: 'bold', textAlign: 'center' }}>BRETT MINERS</h1>
+  
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>TVL (Total Value Locked)</p>
+          <p>{tvl.eth} Tokens</p>
+          </div>
+      
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>My Miners:</p>
+          <p>{myMiners}</p>
+          </div>
+    
+        
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>Claim Power: </p>
+          <p>{claimPower}</p>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>You can claim: </p>
+          <p>{userReward} Brett</p>
+          </div>
+
+          <h1 style={{  textAlign: 'center' }}>
+          <Button className="button-89" role="button" onClick={() => depositETH(depositAmount)}>Deposit ETH</Button>
+          <Button className="button-89" role="button" onClick={() => depositBrett(depositAmount)}>Deposit Brett</Button>
+          </h1>
+          <h1 style={{  textAlign: 'center' }}>
+          <input
+            type="number"
+            placeholder="Amount to deposit"
+            value={depositAmount}
+            onChange={(e) => setDepositAmount(e.target.value)}
+          />
+          </h1>
+          <p>Your rewards: </p>
+          <h1 style={{  textAlign: 'center' }}>
+          <Button className="button-89" role="button" onClick={compound}>Compound</Button>
+          <Button className="button-89" role="button" onClick={withdraw}>Withdraw</Button>
+          </h1>
+          <p style={{  textAlign: 'center', fontSize: '12px' }}>WITHDRAW WILL RESET THE CLAIM POWER TO 50% <br /> CLAIM POWER REGENERATES 10% PER DAY TILL 100%</p>
+        </Section>
+        
+        <Section>
+        <h1 style={{ textAlign: 'center' }}><u>Harvest Return</u></h1>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>Daily return: </p>
+          <p>8%</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p>APR</p>
+            <p>2920%</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p>Dev Fee</p>
+          <p>5%</p>
+          </div>
+        </Section>
+
+        <Section2>
+        
+        <h1><u><strong>REFERAL LINK</strong></u></h1>
+        <ReferralSection style={{ textAlign: 'center' }}>
+          
+          <Button onClick={copyReferralLink} >Copy Referral Link</Button>
+        </ReferralSection>
+        
+        </Section2>
+
+      </LeftSection>
+
+      <RightSection className="RightSection">
+        {/*<img src={BrettMinerImage} alt="Brett Miner Image" />*/}
+      </RightSection>
     </Container>
   );
 }

@@ -1,33 +1,48 @@
+/* Style général de l'application */
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;  /* Assure que l'application prend toute la hauteur de la page */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;  /* Empêche les barres de défilement horizontales */
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 15vmin;  /* La taille du logo s'ajuste dynamiquement en fonction de la hauteur de l'écran */
   pointer-events: none;
 }
 
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 1rem;  /* Espacement dynamique */
+  color: white;
+  font-size: 4vw;  /* La taille du texte s'ajuste en fonction de la largeur de l'écran */
+  flex-grow: 1;  /* Permet à l'en-tête de prendre tout l'espace disponible et d'adapter le contenu */
+}
+
+.App-link {
+  color: #61dafb;
+  font-size: 1rem;  /* Taille de texte plus standard et adaptable */
+  text-decoration: none;
+}
+
+/* Animation du logo uniquement si l'utilisateur préfère des animations */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
+/* Animation du logo */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +50,105 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Adaptation pour les petits écrans */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: 5vw;  /* Taille de texte plus petite et adaptative sur les petits écrans */
+    padding: 1rem;  /* Moins d'espacement sur les petits écrans */
+  }
+
+  .App-logo {
+    height: 25vmin;  /* Réduit la taille du logo sur les petits écrans */
+  }
+}
+
+/* Pour que le body soit également bien adapté */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;  /* Empêche les barres de défilement */
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;  /* Le contenu principal prend l'espace restant pour éviter la coupure en bas */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 1rem;  /* Ajout d'un peu de padding pour ne pas coller aux bords */
+}
+
+/* Ajoute une barre de défilement verticale si le contenu dépasse la taille de l'écran */
+html, body {
+  height: 100%;
+  overflow-y: auto;  /* Permet le défilement vertical si nécessaire */
+}
+
+/* Conteneur principal */
+.Container {
+  
+  max-width: 75vw; /* Utiliser 90% de la largeur de l'écran */
+  width: 100%; /* Largeur par défaut */
+  margin: 0 auto; /* Centrer le conteneur */
+  padding: 20px;
+  box-sizing: border-box; 
+  
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
+}
+
+/* Sections gauche et droite */
+.LeftSection{
+  border: 6px solid black; /* Bordure orange pour chaque section */
+  
+  padding: 40px;
+  margin: 10px;
+}
+
+.RightSection {
+
+width: 100%; /* Prend toute la largeur de la section droite */
+height: auto; /* Garde les proportions de l'image */
+max-width: 100%; 
+}
+
+/* CSS */
+.button-89 {
+  --b: 2px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #000000;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-89:hover,
+.button-89:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+.button-89:active {
+  background: var(--color);
+  color: #fff;
 }
